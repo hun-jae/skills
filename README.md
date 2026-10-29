@@ -4,10 +4,11 @@
 
 ## 포함된 Skills
 
-- `map-project`: 현재 프로젝트 파일과 실행 흐름 요약
+- `git-setting`: Git 미초기화 프로젝트를 포함해 안전하게 worktree 작업 환경 준비
 - `ask-requirements`: 요구사항 문서 분석 및 현업 담당자 질문 도출
+- `plan-work`: 핵심·부가 기능을 구분하고, 최소 프레임워크와 단계별 구현 계획 수립
+- `map-project`: 현재 프로젝트 파일과 실행 흐름 요약
 - `pick-stack`: 기존 환경을 존중하는 프레임워크·기술 선택
-- `plan-work`: 최소 구현 범위와 단계별 계획 수립
 - `review-logic`: 핵심 로직 추적, AI 변경 내용·설계 근거 검토
 - `verify-tests`: 테스트 계획·실행·증거 정리
 - `work-notes`: 계획 문서와 협업 기록 관리
@@ -16,21 +17,21 @@
 
 ## 설치 방법
 
-이 저장소의 **루트 디렉터리 자체를** 작업 환경의 `.agents/skills` 경로에 clone하면 됩니다. 이 저장소에는 각 Skill 폴더가 루트에 직접 들어 있습니다.
-
-```bash
-git clone https://github.com/<YOUR-USER>/<YOUR-REPO>.git .agents/skills
-```
-
-위 명령은 `.agents/skills` 디렉터리가 아직 없을 때 사용하세요. 이미 있다면 먼저 내용을 확인하고, 안전하게 별도 디렉터리에 clone한 뒤 Skill 폴더만 복사하세요.
+이 저장소는 각 최상위 폴더가 하나의 Skill입니다. Codex에서는 필요한 Skill 폴더를 `~/.codex/skills`에 등록합니다. 저장소 자체는 별도 위치에 안전하게 clone해 두고, 필요한 Skill만 등록하는 방식을 권장합니다.
 
 ```bash
 git clone https://github.com/<YOUR-USER>/<YOUR-REPO>.git /tmp/codex-exam-skills
-mkdir -p .agents/skills
-cp -R /tmp/codex-exam-skills/{map-project,ask-requirements,pick-stack,plan-work,review-logic,verify-tests,work-notes,check-submit,explain-work} .agents/skills/
 ```
 
-Codex가 Skill을 표시하지 않으면 세션을 다시 시작하세요. 명시적으로는 `$map-project`, `$ask-requirements`처럼 호출할 수 있습니다. 호출 문법은 사용 중인 Codex 버전에 따라 다를 수 있으므로, 해당 환경의 Skill picker/도움말도 확인하세요.
+예를 들어 Codex의 설치 도구로 개별 Skill을 등록할 수 있습니다.
+
+```bash
+python ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-github.py \
+  --repo <YOUR-USER>/<YOUR-REPO> \
+  --path git-setting ask-requirements plan-work
+```
+
+Codex가 Skill을 표시하지 않으면 새 대화를 시작하세요. 명시적으로는 `$git-setting`, `$ask-requirements`처럼 호출할 수 있습니다. 호출 문법은 사용 중인 Codex 버전에 따라 다를 수 있으므로, 해당 환경의 Skill picker/도움말도 확인하세요.
 
 ## 시험 중 사용 전 확인
 
