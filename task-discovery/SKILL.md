@@ -25,6 +25,9 @@ Before any implementation, present every applicable item below to the user and o
 2. Any complex algorithm and the core implementation design.
 3. API contracts, database schema, and shared interfaces.
 4. Per-session file ownership and the integration method.
+5. Runtime concurrency: who may change the same data, what a concurrent reader sees, and how failed background processing is exposed and recovered.
+
+For runtime concurrency, explain the selected behavior in user-visible terms, not only as a database mechanism. Cover the conflict response for two writers, the read result during an update or recalculation, and the failure state of dependent processing. For example, compare last-write-wins, an optimistic version check that returns a conflict for stale edits, and a short pessimistic lock; compare immediate partial publication with publishing a complete version or retaining the last successful version. State the data integrity, user experience, and implementation trade-offs, then recommend a policy appropriate to the task.
 
 Do not infer approval from silence, a new message, or partial feedback. Record approval, rejection, or deferral with `work-notes`. If a topic does not apply, explain why it is not applicable. Requirements questions remain open until the user answers or explicitly authorizes an assumption.
 
@@ -53,6 +56,10 @@ codex "You are the <role> implementer. Work only on: <owned files>. Follow appro
 ```
 
 Workers may implement autonomously only inside their approved scope. A newly discovered material design issue, interface change, or ownership conflict is a stop-and-report event for the main session; it requires a new user approval before work continues.
+
+## Explain operational behavior before building it
+
+When a task has shared operational data, tell the user what they will observe in the approved scenarios: concurrent edits, reads during a pending recalculation, and a failed engine or background job. Name the displayed state or API result, whether existing results remain available, the retry or recovery path, and the audit information retained. Do not claim these behaviors exist until the UI/API, persistence, and tests demonstrate them.
 
 ## Git and integration safety
 

@@ -17,7 +17,7 @@ Plan from user value outward. Explain what the smallest useful result does befor
    - **Out of scope:** requested or tempting work that is not needed for the agreed result.
 3. Translate the core and required supporting capabilities into technical needs: runtime, interface type, data model and persistence, integrations, validation, testability, and operational constraints.
 4. Inspect the existing stack first. If a framework choice is still needed, recommend the minimum viable framework, libraries, storage, and test tooling. State the evidence, why each choice supports the capabilities, and the trade-off. Use `pick-stack` for a deeper comparison when the choice is genuinely contested or high impact.
-5. Before implementation, identify every applicable major edge-case and exception policy, complex algorithm/core design, API/schema/shared interface, and per-session ownership/integration method. Present alternatives, advantages, disadvantages, and a recommendation for each. Mark it pending until the user explicitly approves, rejects, or defers it; silence is not approval.
+5. Before implementation, identify every applicable major edge-case and exception policy, complex algorithm/core design, API/schema/shared interface, per-session ownership/integration method, and runtime concurrency policy. For each, present alternatives, advantages, disadvantages, and a recommendation. Runtime concurrency must cover concurrent writers, readers during updates or recalculation, dependent-engine failure, retry/recovery, and user-visible status or error behavior. Mark it pending until the user explicitly approves, rejects, or defers it; silence is not approval.
 6. Define the smallest approved architecture and execution/data flow that supports the plan. Keep interfaces and component boundaries proportional to the work.
 7. Decide the implementation shape before delegating. Map every candidate workstream to its dependencies, shared files, stable interface, estimated implementation size, and integration cost.
    - Keep one Fullstack flow for small CRUD work. For a typical web service, Backend + Frontend is a starting point; add Core Logic for a complex algorithm, or AI/RAG for an AI service, only when those units are independently bounded.
@@ -36,7 +36,8 @@ Plan from user value outward. Explain what the smallest useful result does befor
 - Capability map: core, supporting, optional, and out-of-scope work
 - Framework and implementation approach, tied to the capability map
 - Minimal architecture and data/execution flow
-- Approval status for edge-case, core-design, interface, and ownership decisions
+- Approval status for edge-case, core-design, interface, ownership, and concurrency decisions
+- For shared operational data: writer-conflict policy, read-consistency policy, failure/recovery behavior, and the screen/API outcome for each
 - Collaboration decision: single flow or delegated work, with rationale
 - If delegated: ownership map, interfaces, integration owner, handoff checks, and merge/test order
 - Ordered checklist with time budget, files/components, acceptance criteria, and verification per milestone
