@@ -1,13 +1,13 @@
 ---
 name: git-setting
-description: Prepare a local project safely for Git worktrees, including first-time repository initialization when Git exists but the project has not been initialized.
+description: Prepare a local project safely for Git worktrees, including first-time repository initialization, while preserving existing work and requiring approval before publication or main-branch changes.
 ---
 
 # Git and Worktree Setup
 
 ## Goal
 
-Make a project ready for isolated Git worktrees without overwriting existing history, staging secrets, or pushing anything remotely.
+Make a project ready for isolated Git worktrees without overwriting existing history, staging secrets, or publishing changes unintentionally.
 
 ## Procedure
 
@@ -15,9 +15,9 @@ Make a project ready for isolated Git worktrees without overwriting existing his
 2. If the project is already a repository, preserve its history, branch convention, remotes, and uncommitted work. Resolve the intended base branch before creating a worktree. Do not run `git init` inside an existing repository.
 3. If it is not a repository, initialize it with the intended default branch (normally `main`). Inspect the proposed initial contents and `.gitignore` before staging. Never stage `.env`, credentials, build output, or unrelated local files merely to create an initial commit.
 4. Check whether a usable local Git identity exists. Do not invent a name or email; ask the user to supply one or have them configure it when a first commit requires it.
-5. Create the first local commit only after the staged files are reviewed. A commit is required before creating a normal linked worktree. Do not add a remote or push unless explicitly authorized.
-6. Create each worktree as a sibling checkout with a descriptive branch and path. Verify that the new worktree has the intended branch and that the original checkout remains unchanged.
-7. Report exact commands run, repository and worktree paths, base and feature branches, ignored/staged files, and any steps requiring user input.
+5. Create the first local commit only after the staged files are reviewed. A clean, committed and verified base is required before creating a normal linked worktree. Do not add a remote or push unless explicitly authorized.
+6. Create each worktree as a sibling checkout with a unique descriptive branch and path. Give each parallel session exclusive file ownership; do not let worktrees concurrently edit the same file without an explicit handoff and integration owner. Verify that the new worktree has the intended branch and that the original checkout remains unchanged.
+7. Report exact commands run, repository and worktree paths, base and feature branches, base commit, owned files, planned integration order, ignored/staged files, and any steps requiring user input. Use `work-notes` when that Skill is in use.
 
 ## Command Pattern
 
@@ -43,3 +43,7 @@ For an existing repository, omit initialization and use its verified base branch
 - The initial commit, if needed, contains only reviewed project files.
 - The new worktree has its own branch and expected path.
 - No remote was added or pushed, and no secret was exposed or staged.
+
+## Publication boundaries
+
+Creating commits or local worktrees does not authorize a remote push, a merge into `main`, branch deletion, or worktree removal. Ask for explicit user approval immediately before each action. When approval is granted, show the exact target branch and commits that will be published or merged, then verify the resulting Git state.

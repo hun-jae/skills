@@ -12,14 +12,17 @@ description: Use throughout a task to maintain concise plan and AI-collaboration
 
 ## Maintain these records as work progresses
 - **Plan:** problem, users, confirmed requirements, assumptions, scope, chosen approach, acceptance criteria, milestones.
-- **Decision log:** decision, alternatives considered, rationale, trade-off, requirement affected.
-- **Collaboration log:** task delegated to AI, important prompt/response or proposal, what was accepted/rejected, and why. Summarize rather than dumping every chat turn.
+- **Decision log:** decision, alternatives considered, rationale, trade-off, requirement affected, and whether it is an AI proposal or a user-approved decision.
+- **Approval log:** the decision topic, alternatives and recommendation shown, user approval/rejection/deferral, date or conversation reference, and any superseded decision. Never treat silence as approval.
+- **Session log:** each session's role, branch, absolute worktree path, base commit, exclusive file ownership, shared-interface contract, handoff, and integration status.
+- **Collaboration log:** task delegated to AI, important prompt/response or proposal, what was accepted/rejected, new edge cases found, stop-and-report events, and why. Summarize rather than dumping every chat turn.
 - **Verification log:** exact checks run, expected vs actual results, fixes, remaining limitations.
 
 ## Integrity rules
 - Record actual events as they happen; do not reconstruct fictional work after the fact.
 - Distinguish AI suggestions from decisions you personally reviewed and accepted.
 - Do not claim a test ran unless it did. Do not call an unverified result verified.
+- Record actual approvals, rejections, deferrals, interruptions, and resumed work; do not retroactively present a proposal as an approved decision.
 - Keep records brief, factual, and aligned with the current implementation.
 - Update records when decisions change; mark superseded decisions rather than leaving contradictory guidance.
 - Avoid including secrets, credentials, personal data, or irrelevant chat transcripts.
